@@ -28,6 +28,7 @@ import MapView from 'react-native-maps';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import IconIcons from 'react-native-vector-icons/Ionicons';
 import carData, {CarData, CarType} from '../constants/carData';
+import ReservationCard from '../components/reservationCard';
 
 const Home: React.FC<any> = ({navigation}) => {
   const dispatch = useDispatch();
@@ -39,33 +40,33 @@ const Home: React.FC<any> = ({navigation}) => {
     (state: RootState) => state.transaction,
   );
 
-  const {ProfileData} = useSelector((state: RootState)=>state.profile)
+  const {rsData} = useSelector((state: RootState) => state.reservations);
+
+  const {ProfileData} = useSelector((state: RootState) => state.profile);
 
   const fetchTransaction = () => {
     dispatch(
-      apis.transaction({
-        // page: nextPage,
-        // loading: TxLoading,
+      apis.reservations({
+        busId: ProfileData.car.id,
+        page: 1,
       }) as unknown as UnknownAction,
     );
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     // console.log(JSON.stringify({ProfileData}, null, 2))
-    if(ProfileData?.id){
-      fetchTransaction()
+    if (ProfileData?.id) {
+      fetchTransaction();
     }
-  }, [ProfileData])
+  }, [ProfileData]);
 
-  useEffect(()=>{
-    console.log(JSON.stringify({TxData}, null, 2));
-  }, [TxData])
+  useEffect(() => {
+    console.log(JSON.stringify({rsData}, null, 2));
+  }, [rsData]);
 
- 
-
-  useEffect(()=>{
-    dispatch(apis.profile() as unknown as UnknownAction)
-  }, [])
+  useEffect(() => {
+    dispatch(apis.profile() as unknown as UnknownAction);
+  }, []);
 
   return (
     <View style={[container, {padding: 0}]}>
@@ -96,8 +97,7 @@ const Home: React.FC<any> = ({navigation}) => {
           onPress={() => {
             // Handling start the journey
             // navigation.navigate('BookRide')
-          }
-          }
+          }}
         />
       </View>
       <View style={[homeHeader, {marginVertical: 12, marginHorizontal: 20}]}>
@@ -117,24 +117,14 @@ const Home: React.FC<any> = ({navigation}) => {
       </View>
       <FlatList
         style={{marginHorizontal: 10}}
-        data={TxData.map((item: any)=>new CarData(item?.user?.phoneNumber, `${item?.user?.firstName} ${item?.user?.lastName}`, "Today", item?.routeName, item?.id, CarType.BUS))}
+        data={rsData}
         // onEndReached={fetchTransaction}
         onEndReachedThreshold={0.1}
         removeClippedSubviews={true}
         initialNumToRender={6}
         windowSize={3}
         keyExtractor={(item: CarData) => `${item.id}`}
-        renderItem={({item, index}) => (
-          <TransactionCard
-            key={index}
-            plateNumber={item.plateNumber}
-            driver={item.driver}
-            time={item.time}
-            location={item.location}
-            id={item.id}
-            type={item.type}
-          />
-        )}
+        renderItem={({item, index}) => <ReservationCard data={item} />}
         // ListEmptyComponent={EmptyContent}
         showsVerticalScrollIndicator={false}
         // ListFooterComponent={<View>{TxLoading && <Loader />}</View>}

@@ -99,6 +99,15 @@ interface TransactionState {
   nextPage: number;
 }
 
+interface ReservationState {
+  rsLoading: boolean;
+  rsSuccess: boolean;
+  rsMessage: string;
+  rsError: string;
+  rsData: any;
+  nextPage: number;
+}
+
 interface TransactionResponse {
   success: boolean;
   message: string;
@@ -111,6 +120,5 @@ interface TokenState {
   error: string;
   route: string;
 }
-
 
 type RootState = ReturnType<typeof store.getState>;

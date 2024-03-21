@@ -11,7 +11,7 @@ import {
   TransactionResponse,
 } from './types';
 import {getHeaders} from '../constants/config';
-import { Buffer } from 'buffer';
+import {Buffer} from 'buffer';
 import axios from './axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -50,8 +50,8 @@ class Api {
         {},
         {
           headers: {
-            "authorization": `Bearer ${token}`
-          }
+            authorization: `Bearer ${token}`,
+          },
         },
       );
       return response.data as ProfileResponse;
@@ -114,8 +114,8 @@ class Api {
 
   transaction = createAsyncThunk(
     'transactions',
-    async (data: {page?: number, loading?:boolean}, {rejectWithValue}) => {
-      if(data.loading){
+    async (data: {page?: number; loading?: boolean}, {rejectWithValue}) => {
+      if (data.loading) {
         return;
       }
       try {
@@ -125,12 +125,35 @@ class Api {
           {},
           {
             headers: {
-              "authorization": `Bearer ${token}`
-            }
+              authorization: `Bearer ${token}`,
+            },
           },
         );
         return response?.data as TransactionResponse;
       } catch (error: AxiosError | any) {
+        return rejectWithValue({error: error?.response?.data?.message});
+      }
+    },
+  );
+
+  reservations = createAsyncThunk(
+    'reservations',
+    async (data: {busId: number; page?: number}, {rejectWithValue}) => {
+      try {
+        const {token} = await getHeaders();
+        const response = await axios.post(
+          `/tickets/reservations/${data.busId}?page=${
+            data.page
+          }&pageSize=${24}`,
+          {},
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        return response?.data as TransactionResponse;
+      } catch (error: any) {
         return rejectWithValue({error: error?.response?.data?.message});
       }
     },
