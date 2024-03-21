@@ -4,6 +4,7 @@ import signup from './reducers/signup';
 import topup from './reducers/topup';
 import transaction from './reducers/transaction';
 import profile from './reducers/profile';
+import reservations from './reducers/reservations';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     // signup,
     // topup,
     transaction,
+    reservations,
     profile,
   },
 });
