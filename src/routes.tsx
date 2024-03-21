@@ -39,7 +39,7 @@ function Routes(): JSX.Element {
           flex: 1,
         }}>
         <NavigationContainer>
-          {/* {token ? ( */}
+          {token ? (
           <Drawer.Navigator
             screenOptions={{
               headerShown: false,
@@ -47,16 +47,16 @@ function Routes(): JSX.Element {
             drawerContent={props => <UserProfile {...props} />}>
             <Drawer.Screen name="home" component={MainNav} />
           </Drawer.Navigator>
-          {/* ) : ( */}
-          {/* <Stack.Navigator
+           ) : (
+          <Stack.Navigator
             screenOptions={{
               headerShown: false,
             }}>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Setpin" component={SetPin} />
-          </Stack.Navigator> */}
-          {/* )} */}
+          </Stack.Navigator> 
+          )} 
         </NavigationContainer>
       </View>
     </Host>

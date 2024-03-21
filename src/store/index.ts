@@ -8,8 +8,8 @@ import profile from './reducers/profile';
 export const store = configureStore({
   reducer: {
     login,
-    signup,
-    topup,
+    // signup,
+    // topup,
     transaction,
     profile,
   },

@@ -100,10 +100,11 @@ export const PinInput: React.FC<any> = ({label, pin, onChangeText, error}) => {
         textInputStyle={{
           width: 70,
           height: 50,
-          borderRadius: config.borderRadius.md,
-          borderBottomLeftRadius: 15,
-          borderBottomRightRadius: 15,
-          backgroundColor: '#F6F6F6',
+          color: "#fff"
+          // borderRadius: config.borderRadius.md,
+          // borderBottomLeftRadius: 15,
+          // borderBottomRightRadius: 15,
+          // backgroundColor: '#F6F6F6',
         }}
         handleTextChange={onChangeText}
         defaultValue={pin}

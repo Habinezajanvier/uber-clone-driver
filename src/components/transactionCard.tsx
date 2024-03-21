@@ -41,7 +41,7 @@ const TransactionCard: React.FC<Props> = ({
       ]}>
       <View style={transactionContainer}>
         <IconIcons
-          name={type == CarType.MINIBUS ? 'car-outline' : 'bus-outline'}
+          name="person-circle-outline"
           color="#fff"
           size={22}
         />

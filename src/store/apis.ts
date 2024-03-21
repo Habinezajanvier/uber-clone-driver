@@ -34,7 +34,7 @@ class Api {
     'login',
     async (data: LoginData, {rejectWithValue}) => {
       try {
-        const response = await axios.post(`/users/login`, {...data});
+        const response = await axios.post(`/operators/login`, {...data});
         return response.data as LoginResponse;
       } catch (error: AxiosError | any) {
         return rejectWithValue({error: error?.response?.data?.message});
@@ -46,12 +46,12 @@ class Api {
     try {
       const {token} = await getHeaders();
       const response = await axios.post(
-        `/users/profile`,
+        `/operators/profile`,
         {},
         {
           headers: {
-            'x-auth': token,
-          },
+            "authorization": `Bearer ${token}`
+          }
         },
       );
       return response.data as ProfileResponse;
@@ -114,19 +114,19 @@ class Api {
 
   transaction = createAsyncThunk(
     'transactions',
-    async (data: {page: number, loading:boolean}, {rejectWithValue}) => {
+    async (data: {page?: number, loading?:boolean}, {rejectWithValue}) => {
       if(data.loading){
         return;
       }
       try {
         const {token} = await getHeaders();
         const response = await axios.post(
-          `/users/transactions/?page=${data.page}&pageSize=6`,
+          `/tickets/all`,
           {},
           {
             headers: {
-              'x-auth': token,
-            },
+              "authorization": `Bearer ${token}`
+            }
           },
         );
         return response?.data as TransactionResponse;
