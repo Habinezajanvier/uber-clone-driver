@@ -27,10 +27,10 @@ import Toast from 'react-native-toast-message';
 import MapView from 'react-native-maps';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import IconIcons from 'react-native-vector-icons/Ionicons';
-import carData, {CarData} from '../constants/carData';
+import carData, {CarData, CarType} from '../constants/carData';
 
 const Home: React.FC<any> = ({navigation}) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const {height, width} = useWindowDimensions();
   const ASPECT_RATIO = width / height;
@@ -39,14 +39,33 @@ const Home: React.FC<any> = ({navigation}) => {
     (state: RootState) => state.transaction,
   );
 
-  // const fetchTransaction = () => {
-  //   dispatch(
-  //     apis.transaction({
-  //       page: nextPage,
-  //       loading: TxLoading,
-  //     }) as unknown as UnknownAction,
-  //   );
-  // };
+  const {ProfileData} = useSelector((state: RootState)=>state.profile)
+
+  const fetchTransaction = () => {
+    dispatch(
+      apis.transaction({
+        // page: nextPage,
+        // loading: TxLoading,
+      }) as unknown as UnknownAction,
+    );
+  };
+
+  useEffect(()=>{
+    // console.log(JSON.stringify({ProfileData}, null, 2))
+    if(ProfileData?.id){
+      fetchTransaction()
+    }
+  }, [ProfileData])
+
+  useEffect(()=>{
+    console.log(JSON.stringify({TxData}, null, 2));
+  }, [TxData])
+
+ 
+
+  useEffect(()=>{
+    dispatch(apis.profile() as unknown as UnknownAction)
+  }, [])
 
   return (
     <View style={[container, {padding: 0}]}>
@@ -74,7 +93,11 @@ const Home: React.FC<any> = ({navigation}) => {
         }}>
         <HomeHeader
           onDrawer={() => navigation.openDrawer()}
-          onPress={() => navigation.navigate('BookRide')}
+          onPress={() => {
+            // Handling start the journey
+            // navigation.navigate('BookRide')
+          }
+          }
         />
       </View>
       <View style={[homeHeader, {marginVertical: 12, marginHorizontal: 20}]}>
@@ -94,7 +117,7 @@ const Home: React.FC<any> = ({navigation}) => {
       </View>
       <FlatList
         style={{marginHorizontal: 10}}
-        data={carData}
+        data={TxData.map((item: any)=>new CarData(item?.user?.phoneNumber, `${item?.user?.firstName} ${item?.user?.lastName}`, "Today", item?.routeName, item?.id, CarType.BUS))}
         // onEndReached={fetchTransaction}
         onEndReachedThreshold={0.1}
         removeClippedSubviews={true}

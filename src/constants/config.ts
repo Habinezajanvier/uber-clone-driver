@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const apiLink = 'https://karibu-ride-api.tapandgoticketing.rw/api/v1';
+export const apiLink = 'http://64.23.203.15:5050/api/v1';
 
 type IAsyncStorage = {
   key: string;

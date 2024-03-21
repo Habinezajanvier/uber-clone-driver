@@ -8,6 +8,7 @@ import {
   mainTitle,
   authRedirect,
   authMainContainer,
+  container,
 } from '../assets/styles';
 import {Formik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
@@ -37,7 +38,7 @@ const Login: React.FC<any> = ({navigation}) => {
   }, [error, message]);
 
   return (
-    <View style={authMainContainer}>
+    <View style={container}>
       <Text style={mainTitle}>Log In</Text>
       <Formik
         validationSchema={loginValidation}
@@ -65,13 +66,7 @@ const Login: React.FC<any> = ({navigation}) => {
               onChangeText={handleChange('pin')}
               error={errors.pin}
             />
-            <View style={authRedirect}>
-              <Text style={informingText}>Don't have account?</Text>
-              <TouchableOpacity onPress={() => navigation.push('Register')}>
-                <Text style={mainText}>sign up</Text>
-              </TouchableOpacity>
-            </View>
-            <Button title="Log In" onPress={handleSubmit} loading={loading} />
+            <Button radius={2} title="Log In" onPress={handleSubmit} loading={loading} />
           </>
         )}
       </Formik>

@@ -23,7 +23,7 @@ const transactionSlice = createSlice({
         state.TxLoading = false;
         state.TxSuccess = true;
         state.TxMessage = action?.payload?.message;
-        state.TxData = [...state.TxData, ...action?.payload?.data];
+        state.TxData = action?.payload?.data.content;
         state.nextPage = state.nextPage + 1;
       },
     );

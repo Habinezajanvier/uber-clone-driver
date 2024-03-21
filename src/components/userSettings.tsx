@@ -34,7 +34,7 @@ const UserProfile: React.FC<any> = (props: any) => {
               borderBottomWidth: 1,
             }}>
             <FontAwesome name="user-circle-o" color="#fff" size={46} />
-            <Text style={[mainTitle, {marginLeft: 20}]}>John Doe</Text>
+            <Text style={[mainTitle, {marginLeft: 20}]}>{ProfileData.fullName}</Text>
           </View>
           <TouchableOpacity
             onPress={() => navigation.navigate('Messages')}
